@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
+      // 仅用于 TypeScript 中提供 @ 路径别名的类型提示和跳转
       "@/*": ["./src/*"]
     }
   },
