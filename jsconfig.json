@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    // 只做了联想提示,真正的路径转换在vite.config.js
     "paths": {
       "@/*": ["./src/*"]
     }
