@@ -1,7 +1,5 @@
 <script setup></script>
 
-<template>
-  <router-view />
-</template>
+<template>架子<router-view /></template>
 
 <style scoped></style>

@@ -1,7 +1,5 @@
 <script setup></script>
 
-<template>
-  <router-view />
-</template>
+<template>分类页</template>
 
 <style scoped></style>
