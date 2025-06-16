@@ -11,6 +11,7 @@ import homeProduct from './components/HomeProduct.vue'
     <HomeCategory />
     <HomeBanner />
   </div>
+
   <HomeNew />
   <HomeHot />
   <homeProduct />

@@ -17,12 +17,7 @@ onMounted(() => {
   <HeaderFixed />
   <AppHeader />
   <router-view />
-  <div class="test"></div>
   <AppFooter />
 </template>
 
-<style scoped>
-.test {
-  height: 1200px;
-}
-</style>
+<style scoped></style>
