@@ -19,3 +19,8 @@ export function getNewServer() {
 export function getHotServer() {
   return request({ url: 'home/hot' })
 }
+
+// 获取获取所有商品模块
+export function getGoodsServer() {
+  return request({ url: 'home/goods' })
+}
