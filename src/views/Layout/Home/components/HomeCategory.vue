@@ -2,7 +2,6 @@
 import { useCategoriesStore } from '@/stores/categories'
 
 const categories = useCategoriesStore()
-console.log(categories.categoryList)
 </script>
 
 <template>
