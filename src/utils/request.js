@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // 创建实例
 const request = axios.create({
-  baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net', // 接口基础路径
+  baseURL: 'https://pcapi-xiaotuxian-front-devtest.itheima.net', // 接口基础路径
   timeout: 5000 // 超时时间，单位毫秒
 })
 
