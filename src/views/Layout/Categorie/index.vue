@@ -4,13 +4,21 @@ import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import PageBanner from '../components/PageBanner.vue'
 import GoodsCard from '../Home/components/GoodsCard.vue'
+import { onBeforeRouteUpdate } from 'vue-router'
 
 const categoryData = ref({})
-
-onMounted(async () => {
-  const route = useRoute()
-  const res = await getSubCategoryServer(route.params.id)
+const route = useRoute()
+const getSubCategory = async (id = route.params.id) => {
+  const res = await getSubCategoryServer(id)
   categoryData.value = res.result
+}
+
+onMounted(() => {
+  getSubCategory()
+})
+
+onBeforeRouteUpdate((to) => {
+  getSubCategory(to.params.id)
 })
 </script>
 
@@ -44,11 +52,7 @@ onMounted(async () => {
         <h3>- {{ item.name }}-</h3>
       </div>
       <div class="body">
-        <ul class="goods-list">
-          <li v-for="good in item.goods" :key="good.id">
-            <GoodsCard :good="good" />
-          </li>
-        </ul>
+        <GoodsCard v-for="good in item.goods" :good="good" :key="good.id" />
       </div>
     </div>
   </div>
