@@ -1,25 +1,9 @@
 <script setup>
-import { getSubCategoryServer } from '@/api/categories'
-import { onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
 import PageBanner from '../components/PageBanner.vue'
 import GoodsCard from '../Home/components/GoodsCard.vue'
-import { onBeforeRouteUpdate } from 'vue-router'
+import { useSubCategory } from './composables/useSubCategory'
 
-const categoryData = ref({})
-const route = useRoute()
-const getSubCategory = async (id = route.params.id) => {
-  const res = await getSubCategoryServer(id)
-  categoryData.value = res.result
-}
-
-onMounted(() => {
-  getSubCategory()
-})
-
-onBeforeRouteUpdate((to) => {
-  getSubCategory(to.params.id)
-})
+const { categoryData } = useSubCategory()
 </script>
 
 <template>
