@@ -1,22 +1,16 @@
 <script setup>
 import { getSubCategoryServer } from '@/api/categories'
-import { getBannerServer } from '@/api/layout'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import PageBanner from '../components/PageBanner.vue'
+import GoodsCard from '../Home/components/GoodsCard.vue'
 
-const cateList = ref({})
+const categoryData = ref({})
 
 onMounted(async () => {
   const route = useRoute()
   const res = await getSubCategoryServer(route.params.id)
-  cateList.value = res.result
-})
-
-const bannerList = ref([])
-
-onMounted(async () => {
-  const res = await getBannerServer({ distributionSite: '2' })
-  bannerList.value = res.result
+  categoryData.value = res.result
 })
 </script>
 
@@ -27,16 +21,34 @@ onMounted(async () => {
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>{{ cateList.name }}</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <!-- 轮播图 -->
-      <div class="home-banner">
-        <el-carousel height="500px">
-          <el-carousel-item v-for="item in bannerList" :key="item.id">
-            <img :src="item.imgUrl" alt="" />
-          </el-carousel-item>
-        </el-carousel>
+      <PageBanner :distributionSite="2"></PageBanner>
+    </div>
+    <!-- 分类数据 -->
+    <div class="sub-list">
+      <h3>全部分类</h3>
+      <ul>
+        <li v-for="i in categoryData.children" :key="i.id">
+          <RouterLink to="/">
+            <img :src="i.picture" />
+            <p>{{ i.name }}</p>
+          </RouterLink>
+        </li>
+      </ul>
+    </div>
+    <div class="ref-goods" v-for="item in categoryData.children" :key="item.id">
+      <div class="head">
+        <h3>- {{ item.name }}-</h3>
+      </div>
+      <div class="body">
+        <ul class="goods-list">
+          <li v-for="good in item.goods" :key="good.id">
+            <GoodsCard :good="good" />
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -112,21 +124,32 @@ onMounted(async () => {
       display: flex;
       justify-content: space-around;
       padding: 0 40px 30px;
+
+      .goods-list {
+        width: 990px;
+        display: flex;
+        flex-wrap: wrap;
+
+        li {
+          width: 240px;
+          height: 300px;
+          margin-right: 10px;
+          margin-bottom: 10px;
+
+          &:nth-last-child(-n + 4) {
+            margin-bottom: 0;
+          }
+
+          &:nth-child(4n) {
+            margin-right: 0;
+          }
+        }
+      }
     }
   }
 
   .bread-container {
     padding: 25px 0;
-  }
-
-  .home-banner {
-    width: 1240px;
-    height: 500px;
-    margin: 0 auto;
-    img {
-      width: 100%;
-      height: 500px;
-    }
   }
 }
 </style>

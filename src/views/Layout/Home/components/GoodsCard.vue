@@ -2,7 +2,7 @@
 defineProps({
   good: {
     type: Object,
-    default: () => {}
+    default: () => ({})
   }
 })
 </script>
@@ -15,6 +15,7 @@ defineProps({
     <p class="price">&yen;{{ good.price }}</p>
   </RouterLink>
 </template>
+
 <style scoped lang="scss">
 .goods-item {
   display: block;

@@ -9,14 +9,16 @@ const { y } = useWindowScroll()
 <template>
   <div :class="{ show: y > 78 }" class="app-header-sticky">
     <div class="container">
-      <RouterLink class="logo" to="/" />
+      <RouterLink class="logo" to="/" active-class="active" />
       <!-- 导航区域 -->
       <ul class="app-header-nav">
         <li class="home">
           <RouterLink to="/">首页</RouterLink>
         </li>
         <li v-for="item of categories.categoryList" :key="item.id">
-          <RouterLink :to="`/categorie/${item.id}`">{{ item.name }}</RouterLink>
+          <RouterLink :to="`/categorie/${item.id}`" active-class="active">{{
+            item.name
+          }}</RouterLink>
         </li>
       </ul>
 
