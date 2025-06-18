@@ -5,9 +5,16 @@ export function getCategoryServer() {
   return request({ url: 'home/category/head' })
 }
 
-// 获取首页轮播图
-export function getBannerServer() {
-  return request({ url: 'home/banner' })
+// 获取轮播图
+export function getBannerServer(params = {}) {
+  // 默认为1 商品为2
+  const { distributionSite = '1' } = params
+  return request({
+    url: 'home/banner',
+    params: {
+      distributionSite
+    }
+  })
 }
 
 // 获取首页新品推荐

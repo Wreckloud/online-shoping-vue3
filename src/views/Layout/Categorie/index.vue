@@ -1,5 +1,6 @@
 <script setup>
 import { getSubCategoryServer } from '@/api/categories'
+import { getBannerServer } from '@/api/layout'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -9,6 +10,13 @@ onMounted(async () => {
   const route = useRoute()
   const res = await getSubCategoryServer(route.params.id)
   cateList.value = res.result
+})
+
+const bannerList = ref([])
+
+onMounted(async () => {
+  const res = await getBannerServer({ distributionSite: '2' })
+  bannerList.value = res.result
 })
 </script>
 
@@ -21,6 +29,14 @@ onMounted(async () => {
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item>{{ cateList.name }}</el-breadcrumb-item>
         </el-breadcrumb>
+      </div>
+      <!-- 轮播图 -->
+      <div class="home-banner">
+        <el-carousel height="500px">
+          <el-carousel-item v-for="item in bannerList" :key="item.id">
+            <img :src="item.imgUrl" alt="" />
+          </el-carousel-item>
+        </el-carousel>
       </div>
     </div>
   </div>
@@ -101,6 +117,16 @@ onMounted(async () => {
 
   .bread-container {
     padding: 25px 0;
+  }
+
+  .home-banner {
+    width: 1240px;
+    height: 500px;
+    margin: 0 auto;
+    img {
+      width: 100%;
+      height: 500px;
+    }
   }
 }
 </style>
