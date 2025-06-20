@@ -1,8 +1,10 @@
 <script setup>
-import { getCategoryFilterServer } from '@/api/categories'
+import { getCategoryFilterServer, getSubCategoryServer } from '@/api/categories'
 import { useRoute } from 'vue-router'
 import { onMounted, ref } from 'vue'
+import GoodsCard from '../Home/components/GoodsCard.vue'
 
+// 获取面包屑
 const router = useRoute()
 
 const filterList = ref([])
@@ -13,6 +15,21 @@ const getCategoryFilter = async (id) => {
 
 onMounted(() => {
   getCategoryFilter(router.params.id)
+})
+
+// 获取子分类
+const subCategoryList = ref([])
+const getSubCategory = async (data) => {
+  const res = await getSubCategoryServer(data)
+  subCategoryList.value = res.result
+}
+onMounted(() => {
+  getSubCategory({
+    categoryId: 1005000,
+    page: 1,
+    pageSize: 20,
+    sortField: 'publishTime'
+  })
 })
 </script>
 
@@ -36,6 +53,11 @@ onMounted(() => {
       </el-tabs>
       <div class="body">
         <!-- 商品列表-->
+        <GoodsCard
+          v-for="item in subCategoryList.items"
+          :good="item"
+          :key="item.value"
+        />
       </div>
     </div>
   </div>
