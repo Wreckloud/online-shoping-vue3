@@ -4,8 +4,16 @@ import { useRoute } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import GoodsCard from '../Home/components/GoodsCard.vue'
 
-// 获取面包屑
 const router = useRoute()
+
+const requestData = ref({
+  categoryId: router.params.id,
+  page: 1,
+  pageSize: 20,
+  sortField: 'publishTime'
+})
+
+// 获取面包屑
 
 const filterList = ref([])
 const getCategoryFilter = async (id) => {
@@ -25,12 +33,18 @@ const getSubCategory = async (data) => {
 }
 onMounted(() => {
   getSubCategory({
-    categoryId: 1005000,
+    categoryId: router.params.id,
     page: 1,
     pageSize: 20,
     sortField: 'publishTime'
   })
 })
+
+// 列表切换
+const handelClick = () => {
+  console.log(requestData.value.sortField)
+  requestData.value.page = 1
+}
 </script>
 
 <template>
@@ -46,7 +60,7 @@ onMounted(() => {
       </el-breadcrumb>
     </div>
     <div class="sub-container">
-      <el-tabs>
+      <el-tabs @tab-click="handelClick" v-model="requestData.sortField">
         <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
