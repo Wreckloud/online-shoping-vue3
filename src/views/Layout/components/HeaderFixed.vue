@@ -13,7 +13,7 @@ const { y } = useWindowScroll()
       <!-- 导航区域 -->
       <ul class="app-header-nav">
         <li class="home">
-          <RouterLink to="/">首页</RouterLink>
+          <RouterLink to="/" exact-active-class="active">首页</RouterLink>
         </li>
         <li v-for="item of categories.categoryList" :key="item.id">
           <RouterLink :to="`/categorie/${item.id}`" active-class="active">{{
@@ -23,8 +23,8 @@ const { y } = useWindowScroll()
       </ul>
 
       <div class="right">
-        <RouterLink to="/">品牌</RouterLink>
-        <RouterLink to="/">专题</RouterLink>
+        <RouterLink to="/" active-class="active">品牌</RouterLink>
+        <RouterLink to="/" active-class="active">专题</RouterLink>
       </div>
     </div>
   </div>

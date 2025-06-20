@@ -12,7 +12,7 @@ const categories = useCategoriesStore()
       </h1>
       <ul class="app-header-nav">
         <li class="home">
-          <RouterLink to="/">首页</RouterLink>
+          <RouterLink to="/" exact-active-class="active">首页</RouterLink>
         </li>
         <li v-for="item of categories.categoryList" :key="item.id">
           <RouterLink :to="`/categorie/${item.id}`" active-class="active">{{
