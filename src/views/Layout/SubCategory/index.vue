@@ -29,21 +29,28 @@ onMounted(() => {
 const subCategoryList = ref([])
 const getSubCategory = async (data) => {
   const res = await getSubCategoryServer(data)
-  subCategoryList.value = res.result
+  subCategoryList.value = res.result.items
 }
 onMounted(() => {
-  getSubCategory({
-    categoryId: router.params.id,
-    page: 1,
-    pageSize: 20,
-    sortField: 'publishTime'
-  })
+  getSubCategory(requestData.value)
 })
 
 // 列表切换
 const handelClick = () => {
-  console.log(requestData.value.sortField)
   requestData.value.page = 1
+}
+
+// 无限加载
+const isDisabledScroll = ref(false)
+const loadItem = async () => {
+  requestData.value.page++
+  const res = await getSubCategoryServer(requestData.value)
+  // 当数据加载完毕停止监听
+  if (res.result.items.length < requestData.value.pageSize) {
+    isDisabledScroll.value = true
+    return
+  }
+  subCategoryList.value = [...subCategoryList.value, ...res.result.items]
 }
 </script>
 
@@ -53,7 +60,7 @@ const handelClick = () => {
     <div class="bread-container">
       <el-breadcrumb separator=">">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: `/category/${filterList.parentId}` }"
+        <el-breadcrumb-item :to="{ path: `/categorie/${filterList.parentId}` }"
           >{{ filterList.parentName }}
         </el-breadcrumb-item>
         <el-breadcrumb-item>{{ filterList.name }}</el-breadcrumb-item>
@@ -65,12 +72,16 @@ const handelClick = () => {
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body">
+      <div
+        class="body"
+        v-infinite-scroll="loadItem"
+        :infinite-scroll-disabled="isDisabledScroll"
+      >
         <!-- 商品列表-->
         <GoodsCard
-          v-for="item in subCategoryList.items"
+          v-for="item in subCategoryList"
           :good="item"
-          :key="item.value"
+          :key="item.id"
         />
       </div>
     </div>
