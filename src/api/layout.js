@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 // 获取首页导航栏数据
-export function getCategoryServer() {
+export function getLayoutCategoryServer() {
   return request({ url: 'home/category/head' })
 }
 

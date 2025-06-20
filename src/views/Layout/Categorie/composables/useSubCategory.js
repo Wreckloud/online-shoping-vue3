@@ -1,4 +1,4 @@
-import { getSubCategoryServer } from '@/api/categories'
+import { getCategoryServer } from '@/api/categories'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { onBeforeRouteUpdate } from 'vue-router'
@@ -7,7 +7,7 @@ export function useSubCategory() {
   const categoryData = ref({})
   const route = useRoute()
   const getSubCategory = async (id = route.params.id) => {
-    const res = await getSubCategoryServer(id)
+    const res = await getCategoryServer(id)
     categoryData.value = res.result
   }
 
